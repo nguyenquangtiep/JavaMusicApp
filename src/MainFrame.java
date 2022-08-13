@@ -56,7 +56,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.id = id;
 		createGUI();
 		inputLikedList();
-		System.out.println(likedList);
 	}
 	
 	// tao frame
