@@ -13,12 +13,16 @@ public class LoginFrame extends JFrame implements ActionListener{
 	JPasswordField passwordField;
 	JButton loginButton, resetButton, signupButton;
 	HashMap<String, String> loginInfo;
+	HashMap<String, String> username;
+	Account account;
 	
-	public LoginFrame(HashMap<String, String> loginInfo) {
-		this.loginInfo = loginInfo;
+	public LoginFrame(Account account) {
+		this.loginInfo = account.getLoginInfo();
+		this.username = account.getUsername();
+		this.account = account;
 		createGUI();
 	}
-
+	
 	void createGUI() {
 		createComponents();
 		this.add(mainPanel);
@@ -32,7 +36,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 		mainPanel = new JPanel();
 		headingLabel = new JLabel("Sportify");
 		messageLabel = new JLabel("Log in to continue");
-		idLabel = new JLabel("Username:");
+		idLabel = new JLabel("ID:");
 		passwordLabel = new JLabel("Password:");
 		idField = new JTextField();
 		passwordField = new JPasswordField();
@@ -44,6 +48,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 		mainPanel.setBounds(0, 0, 500, 450);
 		mainPanel.setBackground(new Color(50, 50, 50));
 		mainPanel.setLayout(null);
+		
 		headingLabel.setFont(new Font(null, Font.BOLD, 45));
 		headingLabel.setForeground(Color.white);
 		headingLabel.setBounds(160, 10, 170, 50);
@@ -59,12 +64,14 @@ public class LoginFrame extends JFrame implements ActionListener{
 		signupLabel.setBounds(100, 350, 250, 50);
 		signupLabel.setForeground(Color.LIGHT_GRAY);
 		signupLabel.setFont(new Font(null, Font.BOLD, 17));
+		
 		idField.setBounds(170, 145, 260, 30);
 		idField.setFont(new Font(null, Font.BOLD, 25));
 		idField.setBorder(new EmptyBorder(2, 3, 2, 3));
 		passwordField.setBounds(170, 195, 260, 30);
 		passwordField.setFont(new Font(null, Font.BOLD, 25));
 		passwordField.setBorder(new EmptyBorder(2, 3, 2, 3));
+		
 		loginButton.setBounds(100, 280, 300, 50);
 		loginButton.setFocusable(false);
 		loginButton.setBorder(null);
@@ -96,16 +103,18 @@ public class LoginFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		if(e.getSource() == resetButton) {
 			passwordField.setText("");
 		}
+		
 		if(e.getSource() == loginButton) {
 			String id = idField.getText();
 			String password = String.valueOf(passwordField.getPassword());
 			if(loginInfo.containsKey(id)) {
 				if(loginInfo.get(id).equals(password)) {
 					this.setVisible(false);
-					new MainFrame(new SharingData(), id);
+					new MainFrame(new SharingData(), username.get(id));
 				} else {
 					JOptionPane.showMessageDialog(null, "Password is incorrect.", "Wrong", JOptionPane.ERROR_MESSAGE);
 					passwordField.setText("");
@@ -114,8 +123,10 @@ public class LoginFrame extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "ID is incorrect.", "Wrong", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		
 		if(e.getSource() == signupButton) {
-			JOptionPane.showMessageDialog(null, "This function has not been completed yet.", "Working...", JOptionPane.INFORMATION_MESSAGE);
+			this.setVisible(false);
+			new SignupFrame(account);
 		}
 	}
 }

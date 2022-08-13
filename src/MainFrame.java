@@ -40,7 +40,10 @@ public class MainFrame extends JFrame implements ActionListener{
 	JLabel totalTime, currentTime, label;
 	String id;
 	Boolean checkLikedList = false;
-	JMenuBar accountBar;
+	JMenuBar bar;
+	JMenu accountMenu;
+	JMenuItem logoutItem;
+	JMenuItem profileItem;
 
 	public MainFrame(SharingData data, String id) {
 		this.data = data;
@@ -72,6 +75,11 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		panelStack.push(beginPanel); // them phan tu mac dinh vao stack
 		
+		accountMenu.add(profileItem);
+		accountMenu.add(logoutItem);
+		bar.add(accountMenu);
+		
+		this.add(bar);
 		this.add(backButton);
 		this.add(myPane);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,8 +93,42 @@ public class MainFrame extends JFrame implements ActionListener{
 
 	// tao cac components
 	void createComponents() {
+		bar = new JMenuBar();
+		bar.setBorder(null);
+		bar.setBounds(width*3/4, 10, 150, 30);
 		
-		accountBar = new JMenuBar();
+		accountMenu = new JMenu();
+		accountMenu.setText(id);
+		accountMenu.setFont(new Font(null, Font.BOLD, 25));
+		accountMenu.setBackground(Color.white);
+		accountMenu.setPreferredSize(new Dimension(150, 30));
+		
+		logoutItem = new JMenuItem("Log out");
+		logoutItem.setPreferredSize(new Dimension(170, 30));
+		logoutItem.setFont(new Font(null, Font.BOLD, 15));
+		logoutItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				setVisible(false);
+				new LoginFrame(new Account());
+			}
+		
+		});
+		
+		profileItem = new JMenuItem("Profile");
+		profileItem.setPreferredSize(new Dimension(170, 30));
+		profileItem.setFont(new Font(null, Font.BOLD, 15));
+		profileItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(null, "This function has not been completed yet.", "Working...", JOptionPane.INFORMATION_MESSAGE);
+			}
+		
+		});
 		
 		// nut tro lai
 		backButton = new JButton("Back");

@@ -1,15 +1,16 @@
 import java.io.*;
 import java.util.*;
 
-public class IDandPassword {
+public class Account {
 	
 	HashMap<String, String> loginInfo = new HashMap<String, String>();
+	HashMap<String, String> username = new HashMap<String, String>();
 	String accountURL = "IDandPassword.txt";
 	FileInputStream fis;
 	InputStreamReader reader;
 	BufferedReader bReader;
 	
-	public IDandPassword() {
+	public Account() {
 		inputLoginInfo();
 	}
 
@@ -26,6 +27,7 @@ public class IDandPassword {
 				}
 				tokens = line.split("[\\W]");
 				loginInfo.put(tokens[0], tokens[1]);
+				username.put(tokens[0], tokens[2]);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -38,6 +40,10 @@ public class IDandPassword {
 	
 	public HashMap<String, String> getLoginInfo() {
 		return loginInfo;
+	}
+
+	public HashMap<String, String> getUsername() {
+		return username;
 	}
 	
 }

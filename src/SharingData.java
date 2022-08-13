@@ -60,6 +60,21 @@ public class SharingData {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if(fis != null) {
+					fis.close();
+				}
+				if(reader != null) {
+					reader.close();
+				}
+				if(bReader != null) {
+					bReader.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return nameList;
 	}
