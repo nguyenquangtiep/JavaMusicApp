@@ -44,6 +44,10 @@ public class MainFrame extends JFrame implements ActionListener{
 	JMenu accountMenu;
 	JMenuItem logoutItem;
 	JMenuItem profileItem;
+	File file;
+	FileWriter fWriter;
+	BufferedWriter bWriter;
+	PrintWriter pWriter;
 
 	public MainFrame(SharingData data, String id) {
 		this.data = data;
@@ -51,6 +55,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.fileList = data.getFileList();
 		this.id = id;
 		createGUI();
+		inputLikedList();
+		System.out.println(likedList);
 	}
 	
 	// tao frame
@@ -90,6 +96,40 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.setTitle("Sportify");
 		this.setVisible(true);
 	}
+	
+	void inputLikedList() {
+		file = new File("LikedSongs\\"+id+".txt");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try {
+			bReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8));
+			String line;
+			while((line = bReader.readLine()) != null) {
+				if(line.isEmpty()) continue;
+				likedList.add(line);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				bReader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	// tao cac components
 	void createComponents() {
@@ -111,7 +151,35 @@ public class MainFrame extends JFrame implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				file = new File("LikedSongs\\"+id+".txt");
+				if(!file.exists()) {
+					try {
+						file.createNewFile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				try {
+					bWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+					pWriter = new PrintWriter(bWriter);
+					for(String name: likedList) {
+//						pWriter.println(name);
+						bWriter.write(name+"\n");
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} finally {
+					pWriter.close();
+				}
 				setVisible(false);
+				if(clip != null) {
+					clip.close();
+				}
+				if(timer != null) {
+					timer.stop();
+				}
 				new LoginFrame(new Account());
 			}
 		
