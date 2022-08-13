@@ -5,7 +5,7 @@ public class Account {
 	
 	HashMap<String, String> loginInfo = new HashMap<String, String>();
 	HashMap<String, String> username = new HashMap<String, String>();
-	String accountURL = "IDandPassword.txt";
+	String accountURL = "Account.txt";
 	FileInputStream fis;
 	InputStreamReader reader;
 	BufferedReader bReader;

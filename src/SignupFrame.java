@@ -14,7 +14,7 @@ public class SignupFrame extends JFrame implements ActionListener{
 	JButton signupButton, loginButton;
 	JTextField idField, usernameField;
 	JPasswordField passwordField;
-	String accountURL = "IDandPassword.txt";
+	String accountURL = "Account.txt";
 	File file;
 	FileWriter fileWr = null;
 	BufferedWriter bufWr = null;
