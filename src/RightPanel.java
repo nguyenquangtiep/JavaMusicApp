@@ -1,7 +1,11 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.*;
+import java.util.regex.Pattern;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -66,8 +70,9 @@ public class RightPanel extends JPanel{
 			// phan de nhap ten bai hat can tim
 			searchField = new JTextField();
 			searchField.setBounds(width/5, 7, width/5, height/20);
-			searchField.setFont(new Font(null, Font.LAYOUT_LEFT_TO_RIGHT, 25));
+			searchField.setFont(new Font(null, Font.BOLD, 25));
 			searchField.setBorder(null);
+			searchField.setBorder(new EmptyBorder(2, 3, 2, 3));
 			
 			// nut tim kiem
 			searchButton = new JButton("Search");
@@ -85,7 +90,7 @@ public class RightPanel extends JPanel{
 					panel.removeAll(); // xoa het moi khi an nut search
 					if(searchField.getText().isEmpty() == false) {
 						for(String key: keySet) {
-							if((key.toLowerCase()).contains(searchField.getText().toLowerCase())) { // tim kiem khong phan biet chu hoa
+							if(((unAccent(key)).toLowerCase()).contains(unAccent(searchField.getText()).toLowerCase())) { // tim kiem khong phan biet chu hoa
 								panel.add(buttonList.get(key)); // them cac bai hat tim kiem duoc vao panel
 							}
 						}
@@ -107,5 +112,10 @@ public class RightPanel extends JPanel{
 		for(String key: likedList) {
 			panel.add(buttonList.get(key)); // add cac button co key tuong ung voi danh sach thich
 		}
+	}
+	
+	String unAccent(String s) {
+		String temp = Normalizer.normalize(s, Form.NFD);
+		return temp.replaceAll("\\p{M}","");
 	}
 }

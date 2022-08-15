@@ -33,7 +33,6 @@ public class MainFrame extends JFrame implements ActionListener{
 	JPanel previous;
 	JLabel label;
 	String id;
-	Boolean checkLikedList = false;
 	JMenuBar bar;
 	JMenu accountMenu;
 	JMenuItem logoutItem;
