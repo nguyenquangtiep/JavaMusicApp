@@ -11,18 +11,13 @@ import javax.swing.*;
 public class SharingData {
 	
 	String nameURL = "AudioName.txt";
-	TreeMap<String, JButton> buttonList; // danh sach cac button tuong ung voi ten bai hat
 	TreeMap<String, File> fileList; // danh sach cac file tuong ung voi ten bai hat
 	TreeSet<String> nameList; // danh sach ten cac bai hat
 	FileInputStream fis;
 	InputStreamReader reader;
 	BufferedReader bReader;
 	File file;
-	Clip clip;
-	AudioInputStream audioStream;
 	String name;
-	JButton button;
-	JLabel label;
 	
 	public SharingData() {
 		nameList = createNameList();
@@ -86,5 +81,6 @@ public class SharingData {
 	public TreeSet<String> getNameList() {
 		return nameList;
 	}
+	
 	
 }
