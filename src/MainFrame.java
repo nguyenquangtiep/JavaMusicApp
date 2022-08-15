@@ -89,6 +89,13 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setTitle("Sportify");
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			
+		    public void windowClosing(WindowEvent e) {
+		        storeData();
+		    }
+		    
+		});
 	}
 
 	// tao cac components
@@ -235,6 +242,37 @@ public class MainFrame extends JFrame implements ActionListener{
 		return left;
 	}
 	
+	void storeData() {
+		file = new File("LikedSongs\\"+id+".txt");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		try {
+			bWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+			for(String name: likedList) {
+				bWriter.write(name+"\n");
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+			try {
+				if(bWriter != null) {
+					bWriter.close();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -350,38 +388,9 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		// luu lai danh sach thich khi thoat
 		if(e.getSource() == logoutItem) {
-			
-			file = new File("LikedSongs\\"+id+".txt");
-			if(!file.exists()) {
-				try {
-					file.createNewFile();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			
-			try {
-				bWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
-				for(String name: likedList) {
-					bWriter.write(name+"\n");
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				try {
-					if(bWriter != null) {
-						bWriter.close();
-					}
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+			storeData();
 			bot.backToInit();
 			this.setVisible(false);
-			
 			new LoginFrame(new Account());
 		}
 	}

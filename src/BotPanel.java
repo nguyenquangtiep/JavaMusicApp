@@ -124,6 +124,7 @@ public class BotPanel extends JPanel implements ActionListener{
 		this.add(playButton);
 		this.add(nextButton);
 		this.add(loopButton);
+		this.add(likeButton);
 		this.add(slider);
 		this.add(totalTime);
 		this.add(currentTime);
@@ -173,8 +174,12 @@ public class BotPanel extends JPanel implements ActionListener{
 		slider.setEnabled(true);
 		currentTime.setText("00:00");
 		playButton.setText("Stop");
-		if(flag) likeButton.setText("Liked");
-		else likeButton.setText("like");
+		
+		if(likedList.contains(name)) {
+			likeButton.setText("Liked");
+		} else {
+			likeButton.setText("Like");
+		}
 		
 		if(clip != null) {
 			clip.close();
@@ -423,6 +428,17 @@ public class BotPanel extends JPanel implements ActionListener{
 					name = fullList.lower(name);
 					playSong(name);
 				}
+			}
+		}
+		
+		// them vao liked list khi an nut like
+		if(e.getSource() == likeButton) {
+			if(likedList.contains(name)) {
+				likeButton.setText("Like");
+				likedList.remove(name);
+			} else {
+				likeButton.setText("Liked");
+				likedList.add(name);
 			}
 		}
 	}
