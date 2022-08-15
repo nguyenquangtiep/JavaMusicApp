@@ -1,2 +1,2 @@
 # JavaMusicApp
-Final Exam Java
+Java project using XML
