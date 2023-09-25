@@ -1,2 +1,2 @@
 # JavaMusicApp
-Java project using XML
+Java project using File to store the data user
